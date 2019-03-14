@@ -3,6 +3,7 @@ from local_settings import *
 import csv
 
 def connect_client():
+    '''Connect your machine to DocumentCloud's API'''
     if PASSWORD and USERNAME:
         print('Getting DocumentCloud credentials from local_settings.py')
         client = DocumentCloud(USERNAME, PASSWORD)
@@ -12,6 +13,7 @@ def connect_client():
         exit()
 
 def get_project():
+    '''Retreive your project information from DocumentCloud'''
     if PROJECT_ID:
         print('Connecting to DocumentCloud')
         client = connect_client()
@@ -22,10 +24,12 @@ def get_project():
         exit()
 
 def fix_breaks(my_string):
+    '''Change line returns inside strings to spaces'''
     my_string = my_string.replace('\n', ' ')
     return my_string
 
 def make_csv(project):
+    '''Get all the entities from your project's documents and put them in a csv'''
     entities_list = []
     doc_list = project.get_document_list()
     for doc in doc_list:
@@ -47,9 +51,7 @@ def make_csv(project):
         output.writerow(entity)
     print('Writing all entities to a csv')
     csvfile.close()
-
     return
-
 
 if __name__== '__main__':
     project = get_project()
